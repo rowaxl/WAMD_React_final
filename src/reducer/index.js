@@ -27,7 +27,7 @@ const reducer = (
         dataRows: [
           ...state.dataRows.slice(0, targetIndex),
           action.payload,
-          ...state.slice(targetIndex + 1)
+          ...state.dataRows.slice(targetIndex + 1)
         ]
       }
     }
@@ -40,7 +40,7 @@ const reducer = (
         ...state,
         dataRows: [
           ...state.dataRows.slice(0, targetIndex),
-          ...state.slice(targetIndex + 1)
+          ...state.dataRows.slice(targetIndex + 1)
         ]
       }
     }
