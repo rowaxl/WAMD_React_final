@@ -6,9 +6,7 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
-import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
-import "../scss/styles.scss"
 import IconButton from '@material-ui/core/IconButton';
 
 import {
@@ -59,10 +57,6 @@ function createData(id, title, state, url, created, updated) {
   return { id, title, state, url, created, updated, plusbutton: id };
 }
 
-var buttonIcon = `<Button variant="contained" color="primary">
-Hello World
-</Button>`
-
 const rows = [
   createData('123456', 'fix(dev-infra): add vim .swp files to gitignore', "open", "https://api.github.com/repos/angular/angular/issues/40094","2020-12-11T20:33:06Z","2020-12-11T20:33:06Z"),
   createData('123456', 'fix(dev-infra): add vim .swp files to gitignore', "open", "https://api.github.com/repos/angular/angular/issues/40094","2020-12-11T20:33:06Z","2020-12-11T20:33:06Z"),
@@ -74,11 +68,8 @@ const rows = [
 
 const useStyles = makeStyles({
   root: {
-    width: '100%',
-  },
-  container: {
-    maxHeight: 440,
-  },
+    width: '100%'
+  }
 });
 
 export default function StickyHeadTable() {
@@ -86,18 +77,9 @@ export default function StickyHeadTable() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
-  };
-
   return (
     <Paper className={classes.root}>
-      <TableContainer className={classes.container}>
+      <TableContainer>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
@@ -146,15 +128,6 @@ export default function StickyHeadTable() {
           </TableBody>
         </Table>
       </TableContainer>
-      {/* <TablePagination
-        rowsPerPageOptions={[10, 25, 100]}
-        component="div"
-        count={rows.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onChangePage={handleChangePage}
-        onChangeRowsPerPage={handleChangeRowsPerPage}
-      /> */}
     </Paper>
   );
 }
