@@ -102,7 +102,6 @@ export default function StickyHeadTable() {
           <TableHead>
             <TableRow>
               {columns.map((column) => (
-                <>
                 <TableCell
                   key={column.id}
                   align={column.align}
@@ -110,8 +109,6 @@ export default function StickyHeadTable() {
                 >
                   {column.label}
                 </TableCell>
-                </>
-
               ))}
             </TableRow>
           </TableHead>
@@ -120,24 +117,26 @@ export default function StickyHeadTable() {
               return (
                 <TableRow hover role="checkbox" tabIndex={-1} key={row.title}>
                   {columns.map((column) => {
-                    if (column.id !== 'plusbutton') {
-                      const value = row[column.id];
-                      return (
-                        <TableCell key={column.id} align={column.align}>
-                          {column.format && typeof value === 'number' ? column.format(value) : value}
-                        </TableCell>
-                      );
-                    }
+                    const value = row[column.id];
 
                     return (
                       <TableCell key={column.id} align={column.align}>
-                        {/* TODO: Connect with Edit / Delete Modal */}
-                        <IconButton>
-                          <EditIcon />
-                        </IconButton>
-                        <IconButton>
-                          <DeleteIcon />
-                        </IconButton>
+                        {
+                          column.id === 'plusbutton' ?
+                            <>
+                              <IconButton>
+                                <EditIcon />
+                              </IconButton>
+                              <IconButton>
+                                <DeleteIcon />
+                              </IconButton>
+                            </> :
+                            <>
+                              {
+                                column.format && typeof value === 'number' ? column.format(value) : value
+                              }
+                            </>
+                        }
                       </TableCell>
                     )
                   })}
