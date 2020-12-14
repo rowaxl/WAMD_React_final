@@ -1,19 +1,18 @@
 import React from 'react';
-import AppBar2 from '@material-ui/core/AppBar';
+import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
-function AppBar(){
+function Header() {
     return(
-        <>
-         <AppBar2 position="static">
+        <AppBar position="static" color="primary">
             <Toolbar>
                 <Typography variant="h6" >
-                Angular 9 MatTable CRUD Example
+                    React Data Table
                 </Typography>
             </Toolbar>
-        </AppBar2>
-        </>
+        </AppBar>
     )
 }
-export default AppBar
+
+export default Header

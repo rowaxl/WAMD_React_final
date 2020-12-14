@@ -15,7 +15,7 @@ import {
   Delete as DeleteIcon,
 } from '@material-ui/icons'
 
-const AddButton = <IconButton> <AddIcon /> </IconButton> // TODO: connect with ADD Modal
+const AddButton = <IconButton> <AddIcon color="primary" /> </IconButton> // TODO: connect with ADD Modal
 
 const columns = [
   { id: 'id', label: 'id', minWidth: 100 },
@@ -44,7 +44,6 @@ const columns = [
     minWidth: 100,
     align: 'right',
   },
-
   {
     id: 'plusbutton',
     label: AddButton,
@@ -63,19 +62,46 @@ const rows = [
   createData('123456', 'fix(dev-infra): add vim .swp files to gitignore', "open", "https://api.github.com/repos/angular/angular/issues/40094","2020-12-11T20:33:06Z","2020-12-11T20:33:06Z"),
   createData('123456', 'fix(dev-infra): add vim .swp files to gitignore', "open", "https://api.github.com/repos/angular/angular/issues/40094","2020-12-11T20:33:06Z","2020-12-11T20:33:06Z"),
   createData('123456', 'fix(dev-infra): add vim .swp files to gitignore', "open", "https://api.github.com/repos/angular/angular/issues/40094","2020-12-11T20:33:06Z","2020-12-11T20:33:06Z"),
-
+  createData('123456', 'fix(dev-infra): add vim .swp files to gitignore', "open", "https://api.github.com/repos/angular/angular/issues/40094","2020-12-11T20:33:06Z","2020-12-11T20:33:06Z"),
+  createData('123456', 'fix(dev-infra): add vim .swp files to gitignore', "open", "https://api.github.com/repos/angular/angular/issues/40094","2020-12-11T20:33:06Z","2020-12-11T20:33:06Z"),
+  createData('123456', 'fix(dev-infra): add vim .swp files to gitignore', "open", "https://api.github.com/repos/angular/angular/issues/40094","2020-12-11T20:33:06Z","2020-12-11T20:33:06Z"),
+  createData('123456', 'fix(dev-infra): add vim .swp files to gitignore', "open", "https://api.github.com/repos/angular/angular/issues/40094","2020-12-11T20:33:06Z","2020-12-11T20:33:06Z"),
+  createData('123456', 'fix(dev-infra): add vim .swp files to gitignore', "open", "https://api.github.com/repos/angular/angular/issues/40094","2020-12-11T20:33:06Z","2020-12-11T20:33:06Z"),
+  createData('123456', 'fix(dev-infra): add vim .swp files to gitignore', "open", "https://api.github.com/repos/angular/angular/issues/40094","2020-12-11T20:33:06Z","2020-12-11T20:33:06Z"),
+  createData('123456', 'fix(dev-infra): add vim .swp files to gitignore', "open", "https://api.github.com/repos/angular/angular/issues/40094","2020-12-11T20:33:06Z","2020-12-11T20:33:06Z"),
+  createData('123456', 'fix(dev-infra): add vim .swp files to gitignore', "open", "https://api.github.com/repos/angular/angular/issues/40094","2020-12-11T20:33:06Z","2020-12-11T20:33:06Z"),
+  createData('123456', 'fix(dev-infra): add vim .swp files to gitignore', "open", "https://api.github.com/repos/angular/angular/issues/40094","2020-12-11T20:33:06Z","2020-12-11T20:33:06Z"),
+  createData('123456', 'fix(dev-infra): add vim .swp files to gitignore', "open", "https://api.github.com/repos/angular/angular/issues/40094","2020-12-11T20:33:06Z","2020-12-11T20:33:06Z"),
+  createData('123456', 'fix(dev-infra): add vim .swp files to gitignore', "open", "https://api.github.com/repos/angular/angular/issues/40094","2020-12-11T20:33:06Z","2020-12-11T20:33:06Z"),
+  createData('123456', 'fix(dev-infra): add vim .swp files to gitignore', "open", "https://api.github.com/repos/angular/angular/issues/40094","2020-12-11T20:33:06Z","2020-12-11T20:33:06Z"),
+  createData('123456', 'fix(dev-infra): add vim .swp files to gitignore', "open", "https://api.github.com/repos/angular/angular/issues/40094","2020-12-11T20:33:06Z","2020-12-11T20:33:06Z"),
+  createData('123456', 'fix(dev-infra): add vim .swp files to gitignore', "open", "https://api.github.com/repos/angular/angular/issues/40094","2020-12-11T20:33:06Z","2020-12-11T20:33:06Z"),
+  createData('123456', 'fix(dev-infra): add vim .swp files to gitignore', "open", "https://api.github.com/repos/angular/angular/issues/40094","2020-12-11T20:33:06Z","2020-12-11T20:33:06Z"),
+  createData('123456', 'fix(dev-infra): add vim .swp files to gitignore', "open", "https://api.github.com/repos/angular/angular/issues/40094","2020-12-11T20:33:06Z","2020-12-11T20:33:06Z"),
+  createData('123456', 'fix(dev-infra): add vim .swp files to gitignore', "open", "https://api.github.com/repos/angular/angular/issues/40094","2020-12-11T20:33:06Z","2020-12-11T20:33:06Z"),
+  createData('123456', 'fix(dev-infra): add vim .swp files to gitignore', "open", "https://api.github.com/repos/angular/angular/issues/40094","2020-12-11T20:33:06Z","2020-12-11T20:33:06Z"),
+  createData('123456', 'fix(dev-infra): add vim .swp files to gitignore', "open", "https://api.github.com/repos/angular/angular/issues/40094","2020-12-11T20:33:06Z","2020-12-11T20:33:06Z"),
+  createData('123456', 'fix(dev-infra): add vim .swp files to gitignore', "open", "https://api.github.com/repos/angular/angular/issues/40094","2020-12-11T20:33:06Z","2020-12-11T20:33:06Z"),
+  createData('123456', 'fix(dev-infra): add vim .swp files to gitignore', "open", "https://api.github.com/repos/angular/angular/issues/40094","2020-12-11T20:33:06Z","2020-12-11T20:33:06Z"),
+  createData('123456', 'fix(dev-infra): add vim .swp files to gitignore', "open", "https://api.github.com/repos/angular/angular/issues/40094","2020-12-11T20:33:06Z","2020-12-11T20:33:06Z"),
+  createData('123456', 'fix(dev-infra): add vim .swp files to gitignore', "open", "https://api.github.com/repos/angular/angular/issues/40094","2020-12-11T20:33:06Z","2020-12-11T20:33:06Z"),
 ];
 
 const useStyles = makeStyles({
   root: {
     width: '100%'
+  },
+
+  editButton: {
+    color: 'red'
+  },
+  deleteButton: {
+    color: 'red'
   }
 });
 
 export default function StickyHeadTable() {
   const classes = useStyles();
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
   return (
     <Paper className={classes.root}>
@@ -95,7 +121,7 @@ export default function StickyHeadTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
+            {rows.map((row) => {
               return (
                 <TableRow hover role="checkbox" tabIndex={-1} key={row.title}>
                   {columns.map((column) => {
@@ -107,10 +133,10 @@ export default function StickyHeadTable() {
                           column.id === 'plusbutton' ?
                             <>
                               <IconButton>
-                                <EditIcon />
+                                <EditIcon className={classes.editButton} />
                               </IconButton>
                               <IconButton>
-                                <DeleteIcon />
+                                <DeleteIcon className={classes.deleteButton} />
                               </IconButton>
                             </> :
                             <>
