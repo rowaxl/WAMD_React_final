@@ -9,8 +9,15 @@ import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import "../scss/styles.scss"
-import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
 
+import {
+  Add as AddIcon,
+  Edit as EditIcon,
+  Delete as DeleteIcon,
+} from '@material-ui/icons'
+
+const AddButton = <IconButton> <AddIcon /> </IconButton> // TODO: connect with ADD Modal
 
 const columns = [
   { id: 'id', label: 'id', minWidth: 100 },
@@ -42,14 +49,14 @@ const columns = [
 
   {
     id: 'plusbutton',
-    label: '+',
+    label: AddButton,
     minWidth: 100,
     align: 'right',
   },
 ];
 
-function createData(id, title, state, url, created, updated,plusbutton) {
-  return { id, title, state, url, created, updated,plusbutton};
+function createData(id, title, state, url, created, updated) {
+  return { id, title, state, url, created, updated, plusbutton: id };
 }
 
 var buttonIcon = `<Button variant="contained" color="primary">
@@ -113,14 +120,26 @@ export default function StickyHeadTable() {
               return (
                 <TableRow hover role="checkbox" tabIndex={-1} key={row.title}>
                   {columns.map((column) => {
-                    const value = row[column.id];
+                    if (column.id !== 'plusbutton') {
+                      const value = row[column.id];
+                      return (
+                        <TableCell key={column.id} align={column.align}>
+                          {column.format && typeof value === 'number' ? column.format(value) : value}
+                        </TableCell>
+                      );
+                    }
+
                     return (
-                      <>
                       <TableCell key={column.id} align={column.align}>
-                        {column.format && typeof value === 'number' ? column.format(value) : value}
+                        {/* TODO: Connect with Edit / Delete Modal */}
+                        <IconButton>
+                          <EditIcon />
+                        </IconButton>
+                        <IconButton>
+                          <DeleteIcon />
+                        </IconButton>
                       </TableCell>
-                      </>
-                    );
+                    )
                   })}
                 </TableRow>
               );
