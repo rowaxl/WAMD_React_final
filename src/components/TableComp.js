@@ -103,6 +103,14 @@ const useStyles = makeStyles({
 export default function StickyHeadTable() {
   const classes = useStyles();
 
+  const handleEdit = (id) => {
+    console.log('edit ', id);
+  }
+
+  const handleDelete = (id) => {
+    console.log('delete ', id)
+  }
+
   return (
     <Paper className={classes.root}>
       <TableContainer>
@@ -132,10 +140,10 @@ export default function StickyHeadTable() {
                         {
                           column.id === 'plusbutton' ?
                             <>
-                              <IconButton>
+                              <IconButton onClick={() => handleEdit(column.id)}>
                                 <EditIcon className={classes.editButton} />
                               </IconButton>
-                              <IconButton>
+                              <IconButton  onClick={() => handleDelete(column.id)}>
                                 <DeleteIcon className={classes.deleteButton} />
                               </IconButton>
                             </> :

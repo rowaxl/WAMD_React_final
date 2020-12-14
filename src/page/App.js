@@ -1,7 +1,7 @@
 import React from 'react';
-import Header from './composition/Header';
-import Filter from './composition/Filter';
-import TableComp from "./composition/TableComp"
+import Header from '../components/Header';
+import Filter from '../components/Filter';
+import TableComp from "../components/TableComp"
 import "./scss/styles.scss"
 
 function App() {
