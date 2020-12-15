@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector, useDispatch } from 'react-redux'
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
@@ -15,9 +16,11 @@ import {
   Delete as DeleteIcon,
 } from '@material-ui/icons'
 
+import { addRow, editRow, deleteRow } from '../reducer/actions'
+
 const columns = [
   { id: 'id', label: 'id', minWidth: 100 },
-  { id: 'title', label: 'Title', minWidth: 100 },
+  { id: 'title', label: 'Title', minWidth: 300 },
   {
     id: 'state',
     label: 'state',
@@ -27,7 +30,7 @@ const columns = [
   {
     id: 'url',
     label: 'url',
-    minWidth: 100,
+    minWidth: 300,
     align: 'left',
   },
   {
@@ -42,41 +45,14 @@ const columns = [
     minWidth: 100,
     align: 'left',
   },
-
-  {
-    id: 'plusbutton',
-    minWidth: 100,
-    align: 'left',
-  },
-];
-
-function createData(id, title, state, url, created, updated) {
-  return { id, title, state, url, created, updated, plusbutton: id };
-}
-
-const rows = [
-  createData('123456', 'fix(dev-infra): add vim .swp files to gitignore', "open", "https://api.github.com/repos/angular/angular/issues/40094","2020-12-11T20:33:06Z","2020-12-11T20:33:06Z"),
-  createData('123457', 'fix(dev-infra): add vim .swp files to gitignore', "open", "https://api.github.com/repos/angular/angular/issues/40094","2020-12-11T20:33:06Z","2020-12-11T20:33:06Z"),
-  createData('123458', 'fix(dev-infra): add vim .swp files to gitignore', "open", "https://api.github.com/repos/angular/angular/issues/40094","2020-12-11T20:33:06Z","2020-12-11T20:33:06Z"),
-  createData('123459', 'fix(dev-infra): add vim .swp files to gitignore', "open", "https://api.github.com/repos/angular/angular/issues/40094","2020-12-11T20:33:06Z","2020-12-11T20:33:06Z"),
-  createData('123460', 'fix(dev-infra): add vim .swp files to gitignore', "open", "https://api.github.com/repos/angular/angular/issues/40094","2020-12-11T20:33:06Z","2020-12-11T20:33:06Z"),
-  createData('123461', 'fix(dev-infra): add vim .swp files to gitignore', "open", "https://api.github.com/repos/angular/angular/issues/40094","2020-12-11T20:33:06Z","2020-12-11T20:33:06Z"),
-  createData('123462', 'fix(dev-infra): add vim .swp files to gitignore', "open", "https://api.github.com/repos/angular/angular/issues/40094","2020-12-11T20:33:06Z","2020-12-11T20:33:06Z"),
-  createData('123463', 'fix(dev-infra): add vim .swp files to gitignore', "open", "https://api.github.com/repos/angular/angular/issues/40094","2020-12-11T20:33:06Z","2020-12-11T20:33:06Z"),
-  createData('123464', 'fix(dev-infra): add vim .swp files to gitignore', "open", "https://api.github.com/repos/angular/angular/issues/40094","2020-12-11T20:33:06Z","2020-12-11T20:33:06Z"),
-  createData('123465', 'fix(dev-infra): add vim .swp files to gitignore', "open", "https://api.github.com/repos/angular/angular/issues/40094","2020-12-11T20:33:06Z","2020-12-11T20:33:06Z"),
-  createData('123466', 'fix(dev-infra): add vim .swp files to gitignore', "open", "https://api.github.com/repos/angular/angular/issues/40094","2020-12-11T20:33:06Z","2020-12-11T20:33:06Z"),
-  createData('123467', 'fix(dev-infra): add vim .swp files to gitignore', "open", "https://api.github.com/repos/angular/angular/issues/40094","2020-12-11T20:33:06Z","2020-12-11T20:33:06Z"),
-  createData('123468', 'fix(dev-infra): add vim .swp files to gitignore', "open", "https://api.github.com/repos/angular/angular/issues/40094","2020-12-11T20:33:06Z","2020-12-11T20:33:06Z"),
-  createData('123469', 'fix(dev-infra): add vim .swp files to gitignore', "open", "https://api.github.com/repos/angular/angular/issues/40094","2020-12-11T20:33:06Z","2020-12-11T20:33:06Z"),
-  createData('123470', 'fix(dev-infra): add vim .swp files to gitignore', "open", "https://api.github.com/repos/angular/angular/issues/40094","2020-12-11T20:33:06Z","2020-12-11T20:33:06Z"),
-  createData('123471', 'fix(dev-infra): add vim .swp files to gitignore', "open", "https://api.github.com/repos/angular/angular/issues/40094","2020-12-11T20:33:06Z","2020-12-11T20:33:06Z"),
-  createData('123472', 'fix(dev-infra): add vim .swp files to gitignore', "open", "https://api.github.com/repos/angular/angular/issues/40094","2020-12-11T20:33:06Z","2020-12-11T20:33:06Z"),
 ];
 
 const useStyles = makeStyles({
   root: {
     width: '100%'
+  },
+  container: {
+    maxHeight: 'calc(100vh - 216px)'
   },
   editButton: {
     color: 'red'
@@ -88,29 +64,41 @@ const useStyles = makeStyles({
 
 export default function StickyHeadTable() {
   const classes = useStyles();
+  const dispatch = useDispatch();
+
+  const dataRows = useSelector(state => state.dataRows);
 
   const handleAdd = () => {
-    console.log('add new row')
+    dispatch(addRow({
+      id: Date.now(),
+      title: `PR #${Date.now()}`,
+      state: 'open',
+      url: `https://api.github.com/repos/angular/angular/issues/${ Date.now() }`,
+      created: new Date().toISOString(),
+      updated: new Date().toISOString()
+    })) // TODO: move to submit in ADD modal
   }
 
   const handleEdit = (id) => {
-    console.log('edit ', id);
+    const dummy = dataRows.find(row => row.id === id)
+    dispatch(editRow({
+      id,
+      title: dummy.title,
+      state: 'close',
+      url: dummy.url,
+      created: dummy.created,
+      updated: new Date().toISOString()
+    })) // TODO: move to submit in EDIT modal
   }
 
   const handleDelete = (id) => {
-    console.log('delete ', id)
+    dispatch(deleteRow(id)) // TODO: move to submit in DELETE modal
   }
-
-  const AddButton = (
-    <IconButton onClick={handleAdd}>
-      <AddIcon color="primary" />
-    </IconButton>
-  ) // TODO: connect with ADD Modal
 
   return (
     <Paper className={classes.root}>
-      <TableContainer>
-        <Table size="small">
+      <TableContainer className={classes.container}>
+        <Table size="small" stickyHeader>
           <TableHead>
             <TableRow>
               {columns.map((column) => (
@@ -119,44 +107,44 @@ export default function StickyHeadTable() {
                   align={column.align}
                   style={{ minWidth: column.minWidth }}
                 >
-                  {
-                    column.id === 'plusbutton' ?
-                      AddButton :
-                      column.label
-                  }
+                  { column.label }
                 </TableCell>
               ))}
+
+              <TableCell align="left" style={{ minWidth: 100 }}>
+                <IconButton onClick={handleAdd}>
+                  <AddIcon color="primary" />
+                </IconButton>
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
+            {dataRows.map((row) => (
                 <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
                   {columns.map((column) => {
                     const value = row[column.id];
 
                     return (
                       <TableCell key={column.id} align={column.align}>
-                        {
-                          column.id === 'plusbutton' ?
-                            <>
-                              <IconButton onClick={() => handleEdit(row.id)}>
-                                <EditIcon className={classes.editButton} />
-                              </IconButton>
-                              <IconButton  onClick={() => handleDelete(row.id)}>
-                                <DeleteIcon className={classes.deleteButton} />
-                              </IconButton>
-                            </> :
-                            <>
-                              {
-                                column.format && typeof value === 'number' ?
-                                  column.format(value) :
-                                  value
-                              }
-                            </>
-                        }
+                        {<>
+                          {
+                            column.format && typeof value === 'number' ?
+                              column.format(value) :
+                              value
+                          }
+                        </>}
                       </TableCell>
                     )
                   })}
+
+                  <TableCell>
+                    <IconButton onClick={() => handleEdit(row.id)}>
+                      <EditIcon className={classes.editButton} />
+                    </IconButton>
+                    <IconButton  onClick={() => handleDelete(row.id)}>
+                      <DeleteIcon className={classes.deleteButton} />
+                    </IconButton>
+                  </TableCell>
                 </TableRow>
               )
             )}
