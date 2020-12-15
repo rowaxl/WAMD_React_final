@@ -1,18 +1,20 @@
 import React from 'react';
-import AppBar from './composition/AppBar';
-import Filter from './composition/Filter';
-import TableComp from "./composition/TableComp"
-import "./scss/styles.scss"
+import Header from '../components/Header';
+import Filter from '../components/Filter';
+import TableComp from "../components/TableComp"
+import "../scss/styles.scss"
 
 function App() {
 
   return (
     <div className="container">
-      <AppBar />
+      <Header />
+
       <div className="main">
         <Filter/>
         <TableComp />
       </div>
+
     </div>
   );
 }
