@@ -22,30 +22,31 @@ const columns = [
     id: 'state',
     label: 'state',
     minWidth: 100,
-    align: 'right',
+    align: 'left',
   },
   {
     id: 'url',
     label: 'url',
     minWidth: 100,
-    align: 'right',
+    align: 'left',
   },
   {
     id: 'created',
     label: 'Created at',
     minWidth: 100,
-    align: 'right',
+    align: 'left',
   },
   {
     id: 'updated',
     label: 'Updated at',
     minWidth: 100,
-    align: 'right',
+    align: 'left',
   },
+
   {
     id: 'plusbutton',
     minWidth: 100,
-    align: 'right',
+    align: 'left',
   },
 ];
 
