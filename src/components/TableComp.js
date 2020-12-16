@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux'
+
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
@@ -15,8 +15,6 @@ import {
   Edit as EditIcon,
   Delete as DeleteIcon,
 } from '@material-ui/icons'
-
-import { addRow, editRow, deleteRow } from '../reducer/actions'
 
 const columns = [
   { id: 'id', label: 'id', minWidth: 100 },
@@ -62,38 +60,13 @@ const useStyles = makeStyles({
   }
 });
 
-export default function StickyHeadTable() {
+export default function StickyHeadTable({
+  dataRows,
+  handleAddRow,
+  handleEditRow,
+  handleDeleteRow,
+}) {
   const classes = useStyles();
-  const dispatch = useDispatch();
-
-  const dataRows = useSelector(state => state.dataRows);
-
-  const handleAdd = () => {
-    dispatch(addRow({
-      id: Date.now(),
-      title: `PR #${Date.now()}`,
-      state: 'open',
-      url: `https://api.github.com/repos/angular/angular/issues/${ Date.now() }`,
-      created: new Date().toISOString(),
-      updated: new Date().toISOString()
-    })) // TODO: move to submit in ADD modal
-  }
-
-  const handleEdit = (id) => {
-    const dummy = dataRows.find(row => row.id === id)
-    dispatch(editRow({
-      id,
-      title: dummy.title,
-      state: 'close',
-      url: dummy.url,
-      created: dummy.created,
-      updated: new Date().toISOString()
-    })) // TODO: move to submit in EDIT modal
-  }
-
-  const handleDelete = (id) => {
-    dispatch(deleteRow(id)) // TODO: move to submit in DELETE modal
-  }
 
   return (
     <Paper className={classes.root}>
@@ -112,7 +85,7 @@ export default function StickyHeadTable() {
               ))}
 
               <TableCell align="left" style={{ minWidth: 100 }}>
-                <IconButton onClick={handleAdd}>
+                <IconButton onClick={handleAddRow}>
                   <AddIcon color="primary" />
                 </IconButton>
               </TableCell>
@@ -138,10 +111,10 @@ export default function StickyHeadTable() {
                   })}
 
                   <TableCell>
-                    <IconButton onClick={() => handleEdit(row.id)}>
+                    <IconButton onClick={() => handleEditRow(row.id)}>
                       <EditIcon className={classes.editButton} />
                     </IconButton>
-                    <IconButton  onClick={() => handleDelete(row.id)}>
+                    <IconButton  onClick={() => handleDeleteRow(row.id)}>
                       <DeleteIcon className={classes.deleteButton} />
                     </IconButton>
                   </TableCell>
