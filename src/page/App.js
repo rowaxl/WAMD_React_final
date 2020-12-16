@@ -5,6 +5,7 @@ import Header from '../components/Header';
 import Filter from '../components/Filter';
 import TableComp from "../components/TableComp"
 import Modal from "../components/Modal"
+import {addRow, editRow, deleteRow} from "../reducer/actions"
 
 import "../scss/styles.scss"
 
@@ -15,14 +16,17 @@ function App() {
   const [modalMode, setModalMode] = useState('add')
 
   const handleAddRow = () => {
-
+      setModalMode("add")
+      setOpenModal(true)
   }
 
   const handleEditRow = (id) => {
+    console.log("handleEditRow")
 
   }
 
   const handleDeleteRow = (id) => {
+    console.log("handleDeleteRow")
 
   }
 
@@ -32,6 +36,9 @@ function App() {
 
   const handleSubmit = (data) => {
     // TODO: do change and exec actions by mode
+    console.log(data)
+    dispatch(addRow(data))
+    setOpenModal(false)
   }
 
   return (
