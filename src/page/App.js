@@ -30,6 +30,10 @@ function App() {
     setOpenModal(false)
   }
 
+  const handleSubmit = (data) => {
+    // TODO: do change and exec actions by mode
+  }
+
   return (
     <div className="container">
       <Header />
@@ -45,8 +49,9 @@ function App() {
 
         <Modal
           open={openModal}
-          handleClose={handleCloseModal}
           mode={modalMode}
+          handleSubmit={handleSubmit}
+          handleClose={handleCloseModal}
         />
       </div>
 

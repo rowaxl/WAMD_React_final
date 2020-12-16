@@ -5,13 +5,8 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import IconButton from "@material-ui/core/IconButton";
-import DeleteIcon from "@material-ui/icons/Delete";
-import DialogContentText from "@material-ui/core/DialogContentText";
 
-export default function FormDialog(props) {
-
-  const {open, handleClose, mode}=props;
+export default function FormDialog({open, handleClose, mode, handleSubmit}) {
   return (
 
       <Dialog
@@ -75,7 +70,7 @@ export default function FormDialog(props) {
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="primary">
+          <Button onClick={handleSubmit} color="primary">
             Save
           </Button>
           <Button onClick={handleClose} color="primary">
