@@ -33,7 +33,10 @@ function App() {
   const handleDeleteRow = (id) => {
     setModalMode("delete")
     // TODO: idが一致する行を探す
+    const target = dataRows.find(row => row.id === id)
     // TODO: 探した行のデータ（タイトルなど）をモーダルで表示する
+    setModalData(target)
+    setOpenModal(true)
   }
 
   const handleCloseModal = () => {
@@ -50,6 +53,10 @@ function App() {
       }
       case 'edit': {
         dispatch(editRow(data))
+        break
+      }
+      case "delete":{
+        dispatch(deleteRow(data.id))
         break
       }
       default:

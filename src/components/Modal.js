@@ -53,7 +53,11 @@ export default function FormDialog({ open, mode, data, handleClose, handleSubmit
       <DialogContent>
         {
           mode === 'delete' ?
-            <></> :
+            <>
+              { Object.keys(data).map(key =>
+               <p key={key}>{key}:{data[key]}</p>)
+              }
+            </> :
             <>
               <TextField
                 autoFocus
@@ -124,12 +128,13 @@ export default function FormDialog({ open, mode, data, handleClose, handleSubmit
       </DialogContent>
 
       <DialogActions>
-        <Button onClick={onSubmit} color="primary">
-          Save
+        <Button onClick={onSubmit} color={mode === "delete" ? "secondary": "primary"}>
+        {mode === "delete" ? "Delete" : "Save"}
         </Button>
-        <Button onClick={handleClose} color="primary">
+        <Button onClick={handleClose}>
           Cancel
         </Button>
+
       </DialogActions>
     </Dialog>
   );
