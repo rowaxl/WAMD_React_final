@@ -14,20 +14,26 @@ function App() {
   const dataRows = useSelector(state => state.dataRows)
   const [openModal, setOpenModal] = useState(false)
   const [modalMode, setModalMode] = useState('add')
+  const [modalData, setModalData] = useState(null)
 
   const handleAddRow = () => {
-      setModalMode("add")
-      setOpenModal(true)
+    setModalMode("add")
+    setOpenModal(true)
   }
 
   const handleEditRow = (id) => {
-    console.log("handleEditRow")
+    setModalMode("edit")
 
+    const target = dataRows.find(row => row.id === id)
+    setModalData(target)
+
+    setOpenModal(true)
   }
 
   const handleDeleteRow = (id) => {
-    console.log("handleDeleteRow")
-
+    setModalMode("delete")
+    // TODO: idが一致する行を探す
+    // TODO: 探した行のデータ（タイトルなど）をモーダルで表示する
   }
 
   const handleCloseModal = () => {
@@ -35,9 +41,21 @@ function App() {
   }
 
   const handleSubmit = (data) => {
-    // TODO: do change and exec actions by mode
-    console.log(data)
-    dispatch(addRow(data))
+    // TODO: modalMode === 'delete'だったら、dispatch(deleteRow(data.id))を実行する
+
+    switch (modalMode) {
+      case 'add': {
+        dispatch(addRow(data))
+        break
+      }
+      case 'edit': {
+        dispatch(editRow(data))
+        break
+      }
+      default:
+        break
+    }
+
     setOpenModal(false)
   }
 
@@ -57,6 +75,7 @@ function App() {
         <Modal
           open={openModal}
           mode={modalMode}
+          data={modalData}
           handleSubmit={handleSubmit}
           handleClose={handleCloseModal}
         />
