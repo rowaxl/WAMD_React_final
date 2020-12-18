@@ -21,14 +21,21 @@ const TITLE = {
   delete: 'Are you sure?'
 }
 
+
 export default function FormDialog({ open, mode, data, handleClose, handleSubmit }) {
   const [formdata, setformdata] = useState(formInitialValue)
+  const [formError, setFormError] = useState({
+    id:"",
+    title:"",
+    state:"",
+  })
 
   useEffect(() => {
     setformdata(mode === 'add' ? formInitialValue : data)
   }, [mode, data])
 
   const handleChange=(field, value) => {
+    validateField(field, value)
     setformdata({
       ...formdata,
       [field]:value
@@ -36,8 +43,45 @@ export default function FormDialog({ open, mode, data, handleClose, handleSubmit
   }
 
   const onSubmit = ()=>{
-    handleSubmit(formdata);
-    setformdata(formInitialValue);
+
+    if(validateForm(formdata)){
+      handleSubmit(formdata);
+      setformdata(formInitialValue);
+    }
+  }
+
+  const validateField = (field, value) =>{
+    if (field !== "id" && field !== "title" && field !== "state")
+      return
+
+    if(!value){
+      setFormError({
+        ...formError,
+        [field]:`${field} is required`
+      })
+      return
+    }
+    setFormError({
+      ...formError,
+      [field]:""
+    })
+  }
+
+  const validateForm = (formValue) => {
+    Object.keys(formValue).forEach(key=>{
+      validateField(key,formValue[key])
+    })
+
+    if(!formValue.id)
+      return false
+
+    if(!formValue.title)
+      return false
+
+    if(!formValue.state)
+      return false
+
+    return true
   }
 
   return (
@@ -73,7 +117,9 @@ export default function FormDialog({ open, mode, data, handleClose, handleSubmit
                 type="text"
                 fullWidth
                 value={formdata.id}
-                onChange={ e => handleChange("id", e.target.value)}
+                onChange={e => handleChange("id", e.target.value)}
+                error={!!formError.id}
+                helperText={formError.id}
               />
 
               <TextField
@@ -111,7 +157,6 @@ export default function FormDialog({ open, mode, data, handleClose, handleSubmit
                 type="text"
                 fullWidth
                 value={formdata.url}
-                onChange={ e => handleChange("url", e.target.value)}
               />
 
               <TextField
