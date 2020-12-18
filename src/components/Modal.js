@@ -17,8 +17,8 @@ const formInitialValue = {
 
 const TITLE = {
   add: 'Add new Issue',
-  edit: 'Edit Issue',
-  delete: 'Confirm Delete Issue'
+  edit: 'Issue Id: ',
+  delete: 'Are you sure?'
 }
 
 export default function FormDialog({ open, mode, data, handleClose, handleSubmit }) {
@@ -47,7 +47,11 @@ export default function FormDialog({ open, mode, data, handleClose, handleSubmit
       aria-labelledby="form-dialog-title"
     >
       <DialogTitle id="form-dialog-title">
-        { TITLE[mode] }
+        {
+          mode === 'edit' ?
+            TITLE[mode] + data.id :
+            TITLE[mode] 
+        }
       </DialogTitle>
 
       <DialogContent>
@@ -55,7 +59,7 @@ export default function FormDialog({ open, mode, data, handleClose, handleSubmit
           mode === 'delete' ?
             <>
               { Object.keys(data).map(key =>
-               <p key={key}>{key}:{data[key]}</p>)
+                <p key={key}>{key}:{data[key]}</p>)
               }
             </> :
             <>
@@ -71,6 +75,7 @@ export default function FormDialog({ open, mode, data, handleClose, handleSubmit
                 value={formdata.id}
                 onChange={ e => handleChange("id", e.target.value)}
               />
+
               <TextField
                 required
                 color="secondary"
@@ -80,8 +85,10 @@ export default function FormDialog({ open, mode, data, handleClose, handleSubmit
                 type="text"
                 fullWidth
                 value={formdata.title}
-                onChange={ e => handleChange("title", e.target.value)}
+                onChange={e => handleChange("title", e.target.value)}
+                multiline
               />
+
               <TextField
                 required
                 color="secondary"
@@ -90,9 +97,12 @@ export default function FormDialog({ open, mode, data, handleClose, handleSubmit
                 label="State"
                 type="text"
                 fullWidth
+                helperText={`${formdata.state.length}/10`}
                 value={formdata.state}
-                onChange={ e => handleChange("state", e.target.value)}
+                onChange={e => handleChange("state", e.target.value)}
+                style={{resize: 'vertical'}}
               />
+
               <TextField
                 color="secondary"
                 margin="dense"
@@ -103,6 +113,7 @@ export default function FormDialog({ open, mode, data, handleClose, handleSubmit
                 value={formdata.url}
                 onChange={ e => handleChange("url", e.target.value)}
               />
+
               <TextField
                 color="secondary"
                 margin="dense"
@@ -113,6 +124,7 @@ export default function FormDialog({ open, mode, data, handleClose, handleSubmit
                 value={formdata.created}
                 onChange={ e => handleChange("created", e.target.value)}
               />
+
               <TextField
                 color="secondary"
                 margin="dense"
