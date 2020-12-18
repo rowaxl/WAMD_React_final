@@ -2,14 +2,15 @@ import FormControl from '@material-ui/core/FormControl';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 
-function Filter() {
-
+function Filter({ handleFilterChange }) {
     return(
         <div className="formcont">
-        <FormControl fullWidth>
-            <InputLabel htmlFor="standard-adornment-amount">Filter issues:</InputLabel>
-            <Input/>
-        </FormControl>
+            <FormControl fullWidth>
+                    <InputLabel>
+                        Filter issues:
+                    </InputLabel>
+                <Input onChange={ e => handleFilterChange(e.target.value) }/>
+            </FormControl>
         </div>
     )
 }
