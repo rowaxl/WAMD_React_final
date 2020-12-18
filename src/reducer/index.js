@@ -23,7 +23,7 @@ const reducer = (
         dataRows: [...state.dataRows, action.payload]
       }
     case ActionTypes.EDIT_ROW: {
-      const targetIndex = state.dataRows.findIndex(v => v.id === action.payload.id)
+      const targetIndex = state.dataRows.findIndex(v => v.id === action.payload.targetId)
 
       if (targetIndex < 0) return state
 
@@ -31,7 +31,7 @@ const reducer = (
         ...state,
         dataRows: [
           ...state.dataRows.slice(0, targetIndex),
-          action.payload,
+          action.payload.updatedRow,
           ...state.dataRows.slice(targetIndex + 1)
         ]
       }

@@ -4,8 +4,8 @@ export const addRow = (newRow) => {
   return { type: ActionTypes.ADD_ROW, payload: newRow }
 }
 
-export const editRow = (updatedRow) => {
-  return { type: ActionTypes.EDIT_ROW, payload: updatedRow }
+export const editRow = (targetId, updatedRow) => {
+  return { type: ActionTypes.EDIT_ROW, payload: { targetId, updatedRow } }
 }
 
 export const deleteRow = (targetRowId) => {

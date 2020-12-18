@@ -74,9 +74,9 @@ export default function StickyHeadTable({
         <Table size="small" stickyHeader>
           <TableHead>
             <TableRow>
-              {columns.map((column) => (
+              {columns.map((column, index) => (
                 <TableCell
-                  key={column.id}
+                  key={`column${index}`}
                   align={column.align}
                   style={{ minWidth: column.minWidth }}
                 >
@@ -92,13 +92,13 @@ export default function StickyHeadTable({
             </TableRow>
           </TableHead>
           <TableBody>
-            {dataRows.map((row) => (
-                <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
-                  {columns.map((column) => {
+            {dataRows.map((row, rowIndex) => (
+                <TableRow hover role="checkbox" tabIndex={-1} key={`row${rowIndex}`}>
+                  {columns.map((column, columnIndex) => {
                     const value = row[column.id];
 
                     return (
-                      <TableCell key={column.id} align={column.align}>
+                      <TableCell key={`row${rowIndex}-column${columnIndex}`} align={column.align}>
                         {<>
                           {
                             column.format && typeof value === 'number' ?
