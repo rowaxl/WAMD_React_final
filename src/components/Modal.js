@@ -21,29 +21,99 @@ const TITLE = {
   delete: 'Are you sure?'
 }
 
+
 export default function FormDialog({ open, mode, data, handleClose, handleSubmit }) {
-  const [formdata, setformdata] = useState(formInitialValue)
+  const [formData, setFormData] = useState(formInitialValue)
+  const [formError, setFormError] = useState({
+    id:"",
+    title:"",
+    state:"",
+  })
 
   useEffect(() => {
-    setformdata(mode === 'add' ? formInitialValue : data)
+    setFormData(mode === 'add' ? formInitialValue : data)
   }, [mode, data])
 
   const handleChange=(field, value) => {
-    setformdata({
-      ...formdata,
+    validateField(field, value)
+    setFormData({
+      ...formData,
       [field]:value
     })
   }
 
   const onSubmit = ()=>{
-    handleSubmit(formdata);
-    setformdata(formInitialValue);
+    if (validateForm(formData)) {
+      handleSubmit(formData);
+      setFormData(formInitialValue);
+    }
+  }
+
+  const validateField = (field, value) =>{
+    if (field !== "id" && field !== "title" && field !== "state")
+      return
+
+    if(!value){
+      setFormError({
+        ...formError,
+        [field]:`${field} is required`
+      })
+      return
+    }
+
+    if (field === 'state' && value.length > 10) {
+      setFormError({
+        ...formError,
+        [field]: `${field} is too long`
+      })
+      return
+    }
+
+    setFormError({
+      ...formError,
+      [field]: ""
+    })
+  }
+
+  const validateForm = (formValue) => {
+    const formErrors = {}
+
+    if (!formValue.id) {
+      Object.assign(formErrors, { id: 'id is required' })
+    }
+
+    if(!formValue.title) {
+      Object.assign(formErrors, { title: 'title is required' })
+    }
+
+    if(!formValue.state) {
+      Object.assign(formErrors, { state: 'state is required' })
+    }
+
+    if (formValue.state.length > 10) {
+      Object.assign(formErrors, { state: 'state is too long' })
+    }
+
+    setFormError(formErrors)
+
+    return Object.keys(formErrors).length < 1
+  }
+
+  const onClose = () => {
+    setFormData(formInitialValue)
+    setFormError({
+      id:"",
+      title:"",
+      state:"",
+    })
+
+    handleClose()
   }
 
   return (
     <Dialog
       open={open}
-      onClose={handleClose}
+      onClose={onClose}
       aria-labelledby="form-dialog-title"
     >
       <DialogTitle id="form-dialog-title">
@@ -72,8 +142,10 @@ export default function FormDialog({ open, mode, data, handleClose, handleSubmit
                 label="Id"
                 type="text"
                 fullWidth
-                value={formdata.id}
-                onChange={ e => handleChange("id", e.target.value)}
+                value={formData.id}
+                onChange={e => handleChange("id", e.target.value)}
+                error={!!formError.id}
+                helperText={formError.id}
               />
 
               <TextField
@@ -84,9 +156,11 @@ export default function FormDialog({ open, mode, data, handleClose, handleSubmit
                 label="Title"
                 type="text"
                 fullWidth
-                value={formdata.title}
+                value={formData.title}
                 onChange={e => handleChange("title", e.target.value)}
                 multiline
+                error={!!formError.title}
+                helperText={formError.title}
               />
 
               <TextField
@@ -97,10 +171,10 @@ export default function FormDialog({ open, mode, data, handleClose, handleSubmit
                 label="State"
                 type="text"
                 fullWidth
-                helperText={`${formdata.state.length}/10`}
-                value={formdata.state}
+                value={formData.state}
                 onChange={e => handleChange("state", e.target.value)}
-                style={{resize: 'vertical'}}
+                error={!!formError.state}
+                helperText={!!formError.state ? formError.state : `${formData.state.length}/10`}
               />
 
               <TextField
@@ -110,8 +184,7 @@ export default function FormDialog({ open, mode, data, handleClose, handleSubmit
                 label="Url"
                 type="text"
                 fullWidth
-                value={formdata.url}
-                onChange={ e => handleChange("url", e.target.value)}
+                value={formData.url}
               />
 
               <TextField
@@ -121,7 +194,7 @@ export default function FormDialog({ open, mode, data, handleClose, handleSubmit
                 label="Created at"
                 type="text"
                 fullWidth
-                value={formdata.created}
+                value={formData.created}
                 onChange={ e => handleChange("created", e.target.value)}
               />
 
@@ -132,7 +205,7 @@ export default function FormDialog({ open, mode, data, handleClose, handleSubmit
                 label="Updated at"
                 type="text"
                 fullWidth
-                value={formdata.updated}
+                value={formData.updated}
                 onChange={ e => handleChange("updated", e.target.value)}
               />
             </>
@@ -140,10 +213,14 @@ export default function FormDialog({ open, mode, data, handleClose, handleSubmit
       </DialogContent>
 
       <DialogActions>
-        <Button onClick={onSubmit} color={mode === "delete" ? "secondary": "primary"}>
-        {mode === "delete" ? "Delete" : "Save"}
+        <Button
+          onClick={onSubmit}
+          color={mode === "delete" ? "secondary" : "primary"}
+          disabled={Object.keys(formError).map(key => formError[key]).filter(Boolean).length > 0}
+        >
+          {mode === "delete" ? "Delete" : "Save"}
         </Button>
-        <Button onClick={handleClose}>
+        <Button onClick={onClose}>
           Cancel
         </Button>
 

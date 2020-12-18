@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 
 import Header from '../components/Header';
@@ -13,7 +13,8 @@ function App() {
   const dispatch = useDispatch()
   const dataRows = useSelector(state => state.dataRows)
 
-  const [filteredRows, setFilteredRows] = useState(dataRows)
+  const [filteredRows, setFilteredRows] = useState([])
+  const [filterValue, setFilterValue] = useState('')
   const [openModal, setOpenModal] = useState(false)
   const [modalMode, setModalMode] = useState('add')
   const [modalData, setModalData] = useState(null)
@@ -53,7 +54,7 @@ function App() {
         break
       }
       case 'edit': {
-        dispatch(editRow(data))
+        dispatch(editRow(modalData.id, data))
         break
       }
       case "delete":{
@@ -67,7 +68,8 @@ function App() {
     setOpenModal(false)
   }
 
-  const handleFilterChange = (text) => {
+  const handleFilterChange = useCallback((text) => {
+    setFilterValue(text)
     if (!text) {
       setFilteredRows(dataRows)
       return
@@ -76,7 +78,7 @@ function App() {
     const regex = new RegExp(text, 'i')
     const filtered = dataRows.filter(row => regex.test(row.title))
     setFilteredRows(filtered)
-  }
+  }, [dataRows])
 
   const handleReload = () => {
     setFilteredRows([])
@@ -85,6 +87,14 @@ function App() {
       setFilteredRows(dataRows)
     }, 1000)
   }
+
+  useEffect(() => {
+    if (!filterValue) {
+      setFilteredRows([...dataRows])
+    } else {
+      handleFilterChange(filterValue)
+    }
+  }, [filterValue, dataRows, handleFilterChange])
 
   return (
     <div className="container">
