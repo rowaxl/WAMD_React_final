@@ -36,9 +36,10 @@ export default function FormDialog({ open, mode, data, handleClose, handleSubmit
 
   const handleChange=(field, value) => {
     validateField(field, value)
+
     setFormData({
       ...formData,
-      [field]:value
+      [field]: value
     })
   }
 
@@ -185,6 +186,7 @@ export default function FormDialog({ open, mode, data, handleClose, handleSubmit
                 type="text"
                 fullWidth
                 value={formData.url}
+                onChange={e => handleChange("url", e.target.value)}
               />
 
               <TextField
